@@ -1,4 +1,4 @@
-const User = require("../models/userModel");
+const User = require("../models/userModel.js");
 const bcryptjs = require('bcryptjs');
 const { errorHandler } = require("../utils/errorHandler");
 const jwt = require('jsonwebtoken');
@@ -27,6 +27,8 @@ exports.signup = async (req, res, next)=>{
 
 exports.signin = async (req, res, next)=>{
     const {email, password} = req.body;
+    console.log(email);
+    console.log(password);
     if(!email || !password){
         return next(errorHandler(400, 'All fields are required !!'));
     }
@@ -60,7 +62,7 @@ exports.googleAuth = async (req, res, next)=>{
                 username : req.body.name.split(" ").join("").toLowerCase() + Math.random().toString(36).slice(-4),
                 email : req.body.email,
                 password : hashedPassword,
-                avator : req.body.photoUrl,
+                avatar : req.body.photoUrl,
             })
             await newUser.save();
             const {password : pass, ...userWithoutPassword} = newUser._doc;

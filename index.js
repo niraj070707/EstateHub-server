@@ -3,6 +3,7 @@ const connectDB = require('./config/db');
 const dotenv = require('dotenv');
 const userRouter = require('./routes/userRoutes');
 const authRouter = require('./routes/authRoute');
+const cookieParser = require('cookie-parser');
 
 dotenv.config();
 connectDB();
@@ -13,6 +14,7 @@ app.listen(3000, ()=>{
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
