@@ -3,7 +3,7 @@ const bcryptjs = require('bcryptjs');
 const { errorHandler } = require("../utils/errorHandler");
 const jwt = require('jsonwebtoken');
 
-exports.signup = async (req, res, next)=>{
+exports.signUp = async (req, res, next)=>{
     const {username , email, password} = req.body;
 
     if(!username || !email || !password || username === '' || email === '' || password === ''){
@@ -25,7 +25,7 @@ exports.signup = async (req, res, next)=>{
     }
 }
 
-exports.signin = async (req, res, next)=>{
+exports.signIn = async (req, res, next)=>{
     const {email, password} = req.body;
     console.log(email);
     console.log(password);
@@ -69,6 +69,15 @@ exports.googleAuth = async (req, res, next)=>{
             const token = jwt.sign({id : userWithoutPassword._id}, process.env.SECRET_KEY);
             res.cookie('token', token, {httpOnly : true}).status(200).json(userWithoutPassword);
         }
+    }catch(err){
+        next(err);
+    }
+}
+
+exports.signOut = async (req, res, next) => {
+    try{
+        res.clearCookie('token');
+        res.status(200).json('User has been logged out!');
     }catch(err){
         next(err);
     }
