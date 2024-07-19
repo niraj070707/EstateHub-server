@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 
 const userRouter = require('./routes/userRoutes');
 const authRouter = require('./routes/authRoute');
-const listingRouter = require('./routes/listingRoute');
+const listingRouter = require('./routes/listingRoute');     
 
 const cookieParser = require('cookie-parser');
 
