@@ -48,7 +48,6 @@ exports.deleteUser = async (req, res, next) => {
 };
 
 exports.getUserListing = async (req, res, next) => {
-    console.log("hi");
     if(req.user.id === req.params.id){
         try{
             const listing = await Listing.find({ userRef: req.params.id});

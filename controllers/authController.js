@@ -27,8 +27,7 @@ exports.signUp = async (req, res, next)=>{
 
 exports.signIn = async (req, res, next)=>{
     const {email, password} = req.body;
-    console.log(email);
-    console.log(password);
+    
     if(!email || !password){
         return next(errorHandler(400, 'All fields are required !!'));
     }
@@ -40,7 +39,6 @@ exports.signIn = async (req, res, next)=>{
         if(!validPssword){return next(errorHandler(401, 'Wrong credentials !!'));}
                   
         const {password : pass, ...userWithoutPassword} = validUser._doc;
-        console.log(userWithoutPassword);
         const token = jwt.sign({id : validUser._id},process.env.SECRET_KEY);
         res.cookie('token', token, {httpOnly : true}).status(200).json(userWithoutPassword);
     }catch(err){
