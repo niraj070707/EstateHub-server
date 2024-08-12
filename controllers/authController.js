@@ -43,7 +43,7 @@ exports.signIn = async (req, res, next)=>{
         res.cookie('token', token, {httpOnly : true}).status(200).json(userWithoutPassword);
     }catch(err){
         next(err); 
-    }
+    } 
 }
 
 exports.googleAuth = async (req, res, next)=>{
