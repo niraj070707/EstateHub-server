@@ -40,7 +40,7 @@ exports.signIn = async (req, res, next)=>{
                   
         const {password : pass, ...userWithoutPassword} = validUser._doc;
         const token = jwt.sign({id : validUser._id},process.env.SECRET_KEY);
-        res.cookie('token', token, {httpOnly : true, secure:true, sameSite:"None"}).status(200).json(userWithoutPassword);
+        res.cookie('token', token, {httpOnly : true, secure:true, sameSite:"None", maxAge:60000*24*60}).status(200).json(userWithoutPassword);
     }catch(err){
         next(err); 
     } 
