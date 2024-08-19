@@ -1,7 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
-
+const cors = require("cors");
 const userRouter = require('./routes/userRoutes');
 const authRouter = require('./routes/authRoute');
 const listingRouter = require('./routes/listingRoute');     
@@ -18,6 +18,11 @@ app.listen(3000, ()=>{
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors({
+    credentials: true,
+    origin: "https://estatehubbyniraj.netlify.app",
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these methods
+}));
 
 app.use('/api/listing', listingRouter);
 app.use('/api/user', userRouter);
