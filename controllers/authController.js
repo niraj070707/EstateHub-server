@@ -40,7 +40,7 @@ exports.signIn = async (req, res, next)=>{
                   
         const {password : pass, ...userWithoutPassword} = validUser._doc;
         const token = jwt.sign({id : validUser._id},process.env.SECRET_KEY);
-        res.cookie('token', token, {httpOnly : true}).status(200).json(userWithoutPassword);
+        res.cookie('token', token, {httpOnly : true, secure:true, sameSite:"None"}).status(200).json(userWithoutPassword);
     }catch(err){
         next(err); 
     } 
@@ -52,7 +52,7 @@ exports.googleAuth = async (req, res, next)=>{
         if(validUser){
             const {password : pass, ...userWithoutPassword} = validUser._doc;
             const token = jwt.sign({id : userWithoutPassword._id}, process.env.SECRET_KEY);
-            res.cookie('token', token, {httpOnly : true}).status(200).json(userWithoutPassword);
+            res.cookie('token', token, {httpOnly : true, secure:true, sameSite:"None"}).status(200).json(userWithoutPassword);
         }else{
             const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
             const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
@@ -65,7 +65,7 @@ exports.googleAuth = async (req, res, next)=>{
             await newUser.save();
             const {password : pass, ...userWithoutPassword} = newUser._doc;
             const token = jwt.sign({id : userWithoutPassword._id}, process.env.SECRET_KEY);
-            res.cookie('token', token, {httpOnly : true}).status(200).json(userWithoutPassword);
+            res.cookie('token', token, {httpOnly : true, secure:true, sameSite:"None"}).status(200).json(userWithoutPassword);
         }
     }catch(err){
         next(err);
